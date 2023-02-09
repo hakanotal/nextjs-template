@@ -1,180 +1,19 @@
 import {
-  TextInput,
-  Paper,
   Title,
-  Text,
   Container,
-  Group,
-  Button,
   LoadingOverlay,
   Center,
   Stepper,
-  NumberInput,
-  PasswordInput,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { IconArrowLeft, IconDiscountCheck, IconX } from "@tabler/icons";
+import { IconX } from "@tabler/icons";
 import { type NextPage } from "next";
-import Link from "next/link";
 import { useState } from "react";
 import { z, ZodError } from "zod";
-
-const EmailForm = (props: any) => {
-  const [email, setEmail] = useState("");
-
-  return (
-    <Paper
-      withBorder
-      shadow="md"
-      p={40}
-      mt={30}
-      radius="md"
-      className="relative"
-    >
-      <TextInput
-        label="Email"
-        placeholder="user@mail.com"
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <Group position="apart" mt="lg">
-        <Link href="/auth/signin">
-          <Text
-            color="dimmed"
-            size="sm"
-            className="align-center mt-5 flex items-center"
-          >
-            <IconArrowLeft size={12} stroke={1.5} className="mr-1" />
-            Back to Login
-          </Text>
-        </Link>
-
-        <Button
-          variant="outline"
-          size="md"
-          mt="lg"
-          onClick={(e) => {
-            e.preventDefault();
-            props.sendMail(email);
-          }}
-        >
-          Send Mail
-        </Button>
-      </Group>
-    </Paper>
-  );
-};
-
-const CodeForm = (props: any) => {
-  const [code, setCode] = useState(0);
-
-  return (
-    <Paper
-      withBorder
-      shadow="md"
-      p={40}
-      mt={30}
-      radius="md"
-      className="relative"
-    >
-      <NumberInput
-        label="Verification Code"
-        placeholder="123456"
-        min={0}
-        minLength={6}
-        maxLength={6}
-        onChange={(e: number) => setCode(e)}
-        required
-        hideControls
-      />
-      <Group mt="lg" className="justify-center">
-        <Button
-          variant="outline"
-          size="md"
-          mt="lg"
-          onClick={(e) => {
-            e.preventDefault();
-            props.verifyCode(code);
-          }}
-        >
-          Verify
-        </Button>
-      </Group>
-    </Paper>
-  );
-};
-
-const PasswordForm = (props: any) => {
-  const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
-
-  return (
-    <Paper
-      withBorder
-      shadow="md"
-      p={40}
-      mt={30}
-      radius="md"
-      className="relative"
-    >
-      <PasswordInput
-        label="New Password"
-        placeholder="******"
-        onChange={(e) => setPassword(e.target.value)}
-        required
-        mt="md"
-      />
-      <PasswordInput
-        label="Confirm Password"
-        placeholder="******"
-        onChange={(e) => setPassword2(e.target.value)}
-        required
-        mt="md"
-      />
-      <Group mt="lg" className="justify-center">
-        <Button
-          variant="outline"
-          size="md"
-          mt="lg"
-          onClick={(e) => {
-            e.preventDefault();
-            props.resetPassword(password, password2);
-          }}
-        >
-          Reset Password
-        </Button>
-      </Group>
-    </Paper>
-  );
-};
-
-const SuccessForm = () => {
-  return (
-    <Paper
-      withBorder
-      shadow="md"
-      p={40}
-      mt={30}
-      radius="md"
-      className="relative text-center"
-    >
-      <IconDiscountCheck
-        size={40}
-        stroke={2}
-        color="lightgreen"
-        className="m-auto"
-      />
-      <Text size="lg" className="my-4">
-        Your password has been reset successfully.
-      </Text>
-      <Link href="/auth/signin">
-        <Button variant="subtle" size="lg" compact>
-          Login
-        </Button>
-      </Link>
-    </Paper>
-  );
-};
+import CodeForm from "../../components/auth/CodeForm";
+import EmailForm from "../../components/auth/EmailForm";
+import PasswordForm from "../../components/auth/PasswordForm";
+import SuccessForm from "../../components/auth/SuccessForm";
 
 const ForgotPage: NextPage = () => {
   const [loading, setLoading] = useState(false);

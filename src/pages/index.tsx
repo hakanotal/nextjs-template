@@ -1,6 +1,7 @@
 import { Container, Title } from "@mantine/core";
 import { type NextPage } from "next";
 import NavbarComponent from "../components/NavbarComponent";
+import Profile from "../components/profile/Profile";
 
 const Home: NextPage = () => {
   
@@ -14,6 +15,7 @@ const Home: NextPage = () => {
         >
           Welcome!
         </Title>
+        <Profile/>
       </Container>
     </>
   );

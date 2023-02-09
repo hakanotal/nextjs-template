@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import { IconSun, IconMoonStars, IconMoon } from "@tabler/icons";
 
-export function ColorSchemeToggle(props: { wide?: boolean }) {
+export default function ColorSchemeToggle(props: { wide?: boolean }) {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const theme = useMantineTheme();
 
@@ -54,5 +54,3 @@ export function ColorSchemeToggle(props: { wide?: boolean }) {
     </Group>
   );
 }
-
-export default ColorSchemeToggle;

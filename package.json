@@ -18,11 +18,11 @@
     "@mantine/next": "^5.9.5",
     "@mantine/notifications": "^5.9.5",
     "@mantine/prism": "^5.9.5",
-    "@supabase/supabase-js": "^2.2.1",
     "@tabler/icons": "^1.117.0",
     "next": "13.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "vanilla-tilt": "^1.8.0",
     "zod": "^3.18.0"
   },
   "devDependencies": {
