@@ -1,8 +1,8 @@
 import { SignInRequest } from "../schema/SignInRequest";
 import { SignUpRequest } from "../schema/SignUpRequest";
-import { clientEnv } from "../../env/schema.mjs";
+import { env } from "../../env/client.mjs";
 
-const API_URL = clientEnv.NEXT_PUBLIC_API_URL;
+const API_URL = env.NEXT_PUBLIC_API_URL;
 
 export async function signin(email: string, password: string) {
   const data = SignInRequest.safeParse({
@@ -11,7 +11,7 @@ export async function signin(email: string, password: string) {
   });
   if (!data.success) throw data.error;
 
-  const response = await fetch(API_URL+"/auth/signin", {
+  const response = await fetch(API_URL + "/auth/signin", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
