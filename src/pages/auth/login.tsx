@@ -17,26 +17,34 @@ import Link from "next/link";
 import { useState } from "react";
 import { showNotification } from "@mantine/notifications";
 import { ZodError } from "zod";
-import {useRouter} from "next/router";
-import { signup } from "../../lib/api/auth";
-import NavbarComponent from "../../components/common/NavbarComponent";
+import { useRouter } from "next/router";
+import { login } from "../../lib/api/auth";
+import { setCookie } from "cookies-next";
 import FooterComponent from "../../components/common/Footer";
+import NavbarComponent from "../../components/common/NavbarComponent";
 
-const SignupPage: NextPage = () => {
+const LoginPage: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [terms, setTerms] = useState(false);
+  const [remember, setRemember] = useState(false);
   const router = useRouter();
 
-  const handleSignup = async () => {
+  const handleLogin = async () => {
     try {
       setLoading(true);
-
-      const response = await signup(email, password);
+      const response = await login(email, password);
 
       if (response.status === 200) {
-        router.push("/auth/login");
+        // TODO Save token to local storage
+        const token = response.data.token;
+        setCookie("token", JSON.stringify(token), {
+          maxAge: remember ? 2592000 : 86400,
+          path: "/",
+        });
+
+        if (token.role === "admin") router.push("/panel-admin");
+        else router.push("/panel-user");
       }
     } catch (error: any) {
       if (error instanceof ZodError) {
@@ -66,8 +74,8 @@ const SignupPage: NextPage = () => {
       <NavbarComponent
         links={[
           { title: "Home", href: "/", active: false },
-          { title: "Login", href: "/auth/login", active: false },
-          { title: "Sign Up", href: "/auth/signup", active: true },
+          { title: "Login", href: "/auth/login", active: true },
+          { title: "Sign Up", href: "/auth/signup", active: false },
         ]}
       />
       <Center mb={100}>
@@ -78,13 +86,13 @@ const SignupPage: NextPage = () => {
               fontFamily: `Greycliff CF, ${theme.fontFamily}`,
             })}
           >
-            Create New Account
+            Welcome Back!
           </Title>
           <Text color="dimmed" size="sm" align="center" mt={5}>
-            Already have an account?
-            <Link href="/auth/login">
+            Don&apos;t you have an account?
+            <Link href="/auth/signup">
               <Button variant="subtle" compact>
-                Login
+                Sign Up
               </Button>
             </Link>
           </Text>
@@ -114,23 +122,28 @@ const SignupPage: NextPage = () => {
             />
             <Group position="apart" mt="lg">
               <Checkbox
-                label="I accepted the Terms & Conditions"
+                label="Remember Me"
                 sx={{ lineHeight: 1 }}
-                onChange={(e) => setTerms(e.currentTarget.checked)}
+                checked={remember}
+                onChange={(event) => setRemember(event.currentTarget.checked)}
               />
+              <Link href="/auth/forgot">
+                <Button variant="subtle" compact>
+                  Forgot password?
+                </Button>
+              </Link>
             </Group>
             <Button
-              disabled={!terms}
               fullWidth
               variant="filled"
               size="md"
               mt="xl"
               onClick={(e) => {
                 e.preventDefault();
-                handleSignup();
+                handleLogin();
               }}
             >
-              Sign Up
+              Login
             </Button>
           </Paper>
         </Container>
@@ -140,4 +153,4 @@ const SignupPage: NextPage = () => {
   );
 };
 
-export default SignupPage;
+export default LoginPage;

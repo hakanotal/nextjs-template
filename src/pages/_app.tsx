@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import { type AppType } from "next/dist/shared/lib/utils";
-import HeadTag from "../components/HeadTag";
+import HeadTag from "../components/common/HeadTag";
 import { useLocalStorage } from "@mantine/hooks";
 import { NotificationsProvider } from "@mantine/notifications";
 import {

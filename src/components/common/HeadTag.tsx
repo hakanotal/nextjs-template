@@ -8,6 +8,10 @@ export default function HeadTag(){
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        <meta
+          name="description"
+          content="Next.js and Mantine App with Typescript"
+        />
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
       </Head>

@@ -2,10 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-*, *:after, *:before {
-  box-sizing:border-box;
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
 }
 
 body {
-    height: 100vh;
+  height: 100vh;
+  transition: background-color 0.3s ease;
+  -ms-transition: background-color 0.3s ease;
+  -webkit-transition: background-color 0.3s ease;
 }

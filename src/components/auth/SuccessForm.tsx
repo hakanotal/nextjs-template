@@ -21,7 +21,7 @@ export default function SuccessForm() {
       <Text size="lg" className="my-4">
         Your password has been reset successfully.
       </Text>
-      <Link href="/auth/signin">
+      <Link href="/auth/login">
         <Button variant="subtle" size="lg" compact>
           Login
         </Button>

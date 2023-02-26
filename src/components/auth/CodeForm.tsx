@@ -30,7 +30,7 @@ export default function CodeForm(props: any) {
       />
       <Group mt="lg" className="justify-center">
         <Button
-          variant="outline"
+          variant="filled"
           size="md"
           mt="lg"
           onClick={(e) => {

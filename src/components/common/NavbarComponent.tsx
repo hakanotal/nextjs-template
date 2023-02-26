@@ -16,14 +16,11 @@ import Link from "next/link";
 import Image from "next/image";
 
 const useStyles = createStyles((theme) => ({
-  inner: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    height: 64,
+  burger: {
+    marginRight: theme.spacing.md,
 
-    [theme.fn.smallerThan("sm")]: {
-      justifyContent: "flex-start",
+    [theme.fn.largerThan("sm")]: {
+      display: "none",
     },
   },
 
@@ -35,28 +32,63 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  burger: {
-    marginRight: theme.spacing.md,
+  link: {
+    display: "block",
+    lineHeight: 1,
+    padding: "8px 12px",
+    borderRadius: theme.radius.sm,
+    textDecoration: "none",
+    color:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[0]
+        : theme.colors.gray[7],
+    fontSize: theme.fontSizes.sm,
+    fontWeight: 500,
 
-    [theme.fn.largerThan("sm")]: {
-      display: "none",
+    "&:hover": {
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[6]
+          : theme.colors.gray[0],
+    },
+  },
+
+  linkActive: {
+    "&, &:hover": {
+      backgroundColor: theme.fn.variant({
+        variant: "light",
+        color: theme.primaryColor,
+      }).background,
+      color: theme.fn.variant({ variant: "light", color: theme.primaryColor })
+        .color,
     },
   },
 }));
 
-export default function NavbarComponent() {
+interface HeaderMiddleProps {
+  links: { title: string; href: string; active: boolean }[];
+}
+
+export default function NavbarComponent({ links }: HeaderMiddleProps) {
   const [opened, { toggle }] = useDisclosure(false);
   const { classes, cx } = useStyles();
 
-  const links = [
-    { title: "Login", href: "/auth/signin" },
-    { title: "Sign Up", href: "/auth/signup" },
-  ];
+  const buttons = links.map((link) => (
+    <Link
+      key={link.title}
+      href={link.href}
+      className={cx(classes.link, {
+        [classes.linkActive]: link.active,
+      })}
+    >
+      {link.title}
+    </Link>
+  ));
 
   return (
     <>
       <Header height={64} mb={120}>
-        <Container className={classes.inner}>
+        <Container className="flex h-full items-center justify-between max-sm:justify-start">
           <Burger
             opened={opened}
             onClick={toggle}
@@ -64,11 +96,7 @@ export default function NavbarComponent() {
             className={classes.burger}
           />
           <Group className={classes.burgerHidden} spacing={5}>
-            {links.map((link) => (
-              <Link key={link.title} href={link.href}>
-                <Button variant="outline">{link.title}</Button>
-              </Link>
-            ))}
+            {buttons}
           </Group>
 
           <MantineLogo size={48} />

@@ -14,6 +14,8 @@ import CodeForm from "../../components/auth/CodeForm";
 import EmailForm from "../../components/auth/EmailForm";
 import PasswordForm from "../../components/auth/PasswordForm";
 import SuccessForm from "../../components/auth/SuccessForm";
+import FooterComponent from "../../components/common/Footer";
+import NavbarComponent from "../../components/common/NavbarComponent";
 
 const ForgotPage: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -130,38 +132,51 @@ const ForgotPage: NextPage = () => {
   };
 
   return (
-    <Center style={{ height: "100vh" }} className="flex flex-col">
-      <Container size={420} my={40}>
-        <Title
-          className="text-center font-extrabold"
-          sx={(theme) => ({
-            fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-          })}
-        >
-          Forgot Your Password?
-        </Title>
+    <>
+      <NavbarComponent
+        links={[
+          { title: "Home", href: "/", active: false },
+          { title: "Login", href: "/auth/login", active: false },
+          { title: "Sign Up", href: "/auth/signup", active: false },
+        ]}
+      />
+      <Center className="flex flex-col" mb={100}>
+        <Container className="w-1/3 max-md:w-full" my={40}>
+          <Title
+            className="text-center font-extrabold"
+            sx={(theme) => ({
+              fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+            })}
+          >
+            Forgot Your Password?
+          </Title>
 
-        <LoadingOverlay visible={loading} overlayBlur={2} />
+          <LoadingOverlay visible={loading} overlayBlur={2} />
 
-        {active == 0 && <EmailForm sendMail={sendMail} />}
-        {active == 1 && <CodeForm verifyCode={verifyCode} />}
-        {active == 2 && <PasswordForm resetPassword={resetPassword} />}
-        {active == 3 && <SuccessForm />}
-      </Container>
+          {active == 0 && <EmailForm sendMail={sendMail} />}
+          {active == 1 && <CodeForm verifyCode={verifyCode} />}
+          {active == 2 && <PasswordForm resetPassword={resetPassword} />}
+          {active == 3 && <SuccessForm />}
+        </Container>
 
-      <Container className="mt-20 text-center">
-        <Stepper
-          active={active}
-          onStepClick={stepClick}
-          breakpoint="sm"
-          className="md:min-w-[768px]"
-        >
-          <Stepper.Step label="First Step" description="Enter your email" />
-          <Stepper.Step label="Second Step" description="Verify the code" />
-          <Stepper.Step label="Final Step" description="Reset your password" />
-        </Stepper>
-      </Container>
-    </Center>
+        <Container className="mt-20 text-center">
+          <Stepper
+            active={active}
+            onStepClick={stepClick}
+            breakpoint="sm"
+            className="md:min-w-[768px]"
+          >
+            <Stepper.Step label="First Step" description="Enter your email" />
+            <Stepper.Step label="Second Step" description="Verify the code" />
+            <Stepper.Step
+              label="Final Step"
+              description="Reset your password"
+            />
+          </Stepper>
+        </Container>
+      </Center>
+      <FooterComponent />
+    </>
   );
 };
 

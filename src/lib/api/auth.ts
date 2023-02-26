@@ -4,14 +4,15 @@ import { env } from "../../env/client.mjs";
 
 const API_URL = env.NEXT_PUBLIC_API_URL;
 
-export async function signin(email: string, password: string) {
+// Client Side API Calls
+export async function login(email: string, password: string) {
   const data = SignInRequest.safeParse({
     email,
     password,
   });
   if (!data.success) throw data.error;
 
-  const response = await fetch(API_URL + "/auth/signin", {
+  const response = await fetch(API_URL + "/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

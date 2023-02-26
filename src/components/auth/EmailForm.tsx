@@ -23,7 +23,7 @@ export default function EmailForm(props: any) {
         required
       />
       <Group position="apart" mt="lg">
-        <Link href="/auth/signin">
+        <Link href="/auth/login">
           <Text
             color="dimmed"
             size="sm"
@@ -35,7 +35,7 @@ export default function EmailForm(props: any) {
         </Link>
 
         <Button
-          variant="outline"
+          variant="filled"
           size="md"
           mt="lg"
           onClick={(e) => {
